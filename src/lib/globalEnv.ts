@@ -5,6 +5,7 @@ const environment = {
   REDIRECT_URI: process.env.NEXT_PUBLIC_REDIRECT_URI || "",
   PUBLIC_KEY: process.env.NEXT_PUBLIC_PUBLIC_KEY || "",
   CODEF_ADMIN_URL: process.env.NEXT_PUBLIC_CODEF_ADMIN_URL || "",
+  CERT_SOCKET_URL: process.env.NEXT_PUBLIC_CERT_SOCKET_URL || "",
 };
 
 export default environment;
