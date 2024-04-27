@@ -7,6 +7,7 @@ import { decodeToJson } from "~/lib/decodeToJson";
 import { AccountRegisterVerification } from "./AccountRegisterVerification";
 import { AccountRegisterRequestDto } from "./AccountRegisterRequestDto";
 import { jwtUtils } from "~/lib/jwtUtils";
+import { codefAuthorization } from "~/lib/codefAuthorization";
 
 class AccountRegisterService {
   public async execute(req: NextRequest) {
@@ -58,11 +59,7 @@ class AccountRegisterService {
           },
         ],
       },
-      {
-        headers: {
-          Authorization: `Bearer ${await getCodefToken()}`,
-        },
-      }
+      await codefAuthorization()
     );
     return data;
   }
