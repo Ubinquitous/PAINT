@@ -4,6 +4,7 @@ import { getCodefToken } from "~/lib/getCodefToken";
 import { codef } from "../..";
 import { AccountAddRequestDto } from "./AccountAddRequestDto";
 import { AccountAddVerification } from "./AccountAddVerification";
+import { codefAuthorization } from "~/lib/codefAuthorization";
 
 class AccountAddService {
   public async execute(req: NextRequest) {
@@ -37,11 +38,7 @@ class AccountAddService {
           },
         ],
       },
-      {
-        headers: {
-          Authorization: `Bearer ${await getCodefToken()}`,
-        },
-      }
+      await codefAuthorization()
     );
     return data;
   }
