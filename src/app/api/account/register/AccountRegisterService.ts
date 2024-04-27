@@ -6,6 +6,7 @@ import { codef } from "../..";
 import { decodeToJson } from "~/lib/decodeToJson";
 import { AccountRegisterVerification } from "./AccountRegisterVerification";
 import { AccountRegisterRequestDto } from "./AccountRegisterRequestDto";
+import { jwtUtils } from "~/lib/jwtUtils";
 
 class AccountRegisterService {
   public async execute(req: NextRequest) {
@@ -28,12 +29,18 @@ class AccountRegisterService {
         userName,
       },
     });
-    return NextResponse.json({ status: 200, message: "생성 성공" });
+    return NextResponse.json({
+      status: 200,
+      message: "생성 성공",
+      data: {
+        access_token: `Bearer ${jwtUtils().sign(data.connectedId)}`,
+        refresh_token: `Bearer ${jwtUtils().refresh(data.connectedId)}`,
+      },
+    });
   }
 
   private async registerAccount(dto: AccountRegisterRequestDto) {
     const { password } = dto;
-    console.log(dto);
     const { data } = await codef.post(
       "/v1/account/create",
       {
