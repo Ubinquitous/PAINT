@@ -22,7 +22,6 @@ class AccountAddService {
 
   private async addAccount(dto: AccountAddRequestDto, connectedId: string) {
     const { password } = dto;
-    console.log(dto);
     const { data } = await codef.post(
       "/v1/account/add",
       {
