@@ -1,5 +1,5 @@
 import { codefAuthorization } from "~/lib/codefAuthorization";
-import { codef } from "../..";
+import { codef } from "../../..";
 import { NextRequest, NextResponse } from "next/server";
 import { decodeToJson } from "~/lib/decodeToJson";
 import { ConnectedCommonVerifyRequestDto } from "~/lib/dto/ConnectedCommonVerifyRequestDto";
@@ -7,7 +7,7 @@ import { ConnectedCommonVerifyVerficiation } from "~/lib/dto/ConnectedCommonVeri
 import { jwtUtils } from "~/lib/jwtUtils";
 import { getAuthorizationToken } from "~/lib/getAuthorizationToken";
 
-class GetAccountListService {
+class GetStockAccountListService {
   public async execute(req: NextRequest) {
     const { searchParams } = req.nextUrl;
     const { connectedId } = jwtUtils().verify(getAuthorizationToken());
@@ -15,19 +15,18 @@ class GetAccountListService {
       organization: searchParams.get("organization"),
       connectedId,
     } as ConnectedCommonVerifyRequestDto;
-
     const validation = ConnectedCommonVerifyVerficiation.safeParse(request);
 
     if (!validation.success)
       return NextResponse.json(validation.error.issues, { status: 400 });
 
-    const { data } = decodeToJson(await this.getAccountList(request));
+    const { data } = decodeToJson(await this.getStockAccountList(request));
 
     return NextResponse.json({ status: 200, data });
   }
 
-  private async getAccountList(request: ConnectedCommonVerifyRequestDto) {
-    const { data } = await codef.get("/v1/kr/bank/p/account/account-list", {
+  private async getStockAccountList(request: ConnectedCommonVerifyRequestDto) {
+    const { data } = await codef.get("/v1/kr/stock/a/account/account-list", {
       data: request,
       ...(await codefAuthorization()),
     });
@@ -35,4 +34,4 @@ class GetAccountListService {
   }
 }
 
-export default GetAccountListService;
+export default GetStockAccountListService;

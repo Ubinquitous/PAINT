@@ -7,32 +7,35 @@ import { ConnectedCommonVerifyVerficiation } from "~/lib/dto/ConnectedCommonVeri
 import { jwtUtils } from "~/lib/jwtUtils";
 import { getAuthorizationToken } from "~/lib/getAuthorizationToken";
 
-class GetAccountListService {
+class GetStockTradeListService {
   public async execute(req: NextRequest) {
-    const { searchParams } = req.nextUrl;
     const { connectedId } = jwtUtils().verify(getAuthorizationToken());
-    const request = {
-      organization: searchParams.get("organization"),
+    const request = (await req.json()) as ConnectedCommonVerifyRequestDto;
+    const validation = ConnectedCommonVerifyVerficiation.safeParse({
+      ...request,
       connectedId,
-    } as ConnectedCommonVerifyRequestDto;
-
-    const validation = ConnectedCommonVerifyVerficiation.safeParse(request);
+    });
 
     if (!validation.success)
       return NextResponse.json(validation.error.issues, { status: 400 });
 
-    const { data } = decodeToJson(await this.getAccountList(request));
+    const { data } = decodeToJson(
+      await this.getStockTradeList({ ...request, connectedId })
+    );
 
     return NextResponse.json({ status: 200, data });
   }
 
-  private async getAccountList(request: ConnectedCommonVerifyRequestDto) {
-    const { data } = await codef.get("/v1/kr/bank/p/account/account-list", {
-      data: request,
-      ...(await codefAuthorization()),
-    });
+  private async getStockTradeList(request: ConnectedCommonVerifyRequestDto) {
+    const { data } = await codef.get(
+      "/v1/kr/stock/a/account/transaction-list",
+      {
+        data: request,
+        ...(await codefAuthorization()),
+      }
+    );
     return data;
   }
 }
 
-export default GetAccountListService;
+export default GetStockTradeListService;

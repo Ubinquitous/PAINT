@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 const secret = process.env.NEXT_PUBLIC_JWT_SECRET!;
 
 export const jwtUtils = () => {
-  const sign = (userId: string) => {
-    return jwt.sign({ id: userId }, secret, {
+  const sign = (connectedId: string) => {
+    return jwt.sign({ id: connectedId }, secret, {
       algorithm: "HS256",
       expiresIn: "24h",
     });
@@ -15,7 +15,7 @@ export const jwtUtils = () => {
       const decoded = jwt.verify(token, secret);
       return {
         ok: true,
-        userId: decoded.id,
+        connectedId: decoded.id,
       };
     } catch (error: any) {
       return {
@@ -25,8 +25,8 @@ export const jwtUtils = () => {
     }
   };
 
-  const refresh = (userId: string) => {
-    return jwt.sign({ id: userId }, secret, {
+  const refresh = (connectedId: string) => {
+    return jwt.sign({ id: connectedId }, secret, {
       algorithm: "HS256",
       expiresIn: "30d",
     });

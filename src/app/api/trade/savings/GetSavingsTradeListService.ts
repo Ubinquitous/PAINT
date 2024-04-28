@@ -4,17 +4,25 @@ import { NextRequest, NextResponse } from "next/server";
 import { decodeToJson } from "~/lib/decodeToJson";
 import { ConnectedVerifyRequestDto } from "~/lib/dto/ConnectedVerifyRequestDto";
 import { ConnectedVerifyVerification } from "~/lib/dto/ConnectedVerifyVerfication";
+import { jwtUtils } from "~/lib/jwtUtils";
+import { getAuthorizationToken } from "~/lib/getAuthorizationToken";
 
 class GetSavingsTradeListService {
   public async execute(req: NextRequest) {
     const request = (await req.json()) as ConnectedVerifyRequestDto;
+    const { connectedId } = jwtUtils().verify(getAuthorizationToken());
 
-    const validation = ConnectedVerifyVerification.safeParse(request);
+    const validation = ConnectedVerifyVerification.safeParse({
+      ...request,
+      connectedId,
+    });
 
     if (!validation.success)
       return NextResponse.json(validation.error.issues, { status: 400 });
 
-    const { data } = decodeToJson(await this.getSavingsTradeList(request));
+    const { data } = decodeToJson(
+      await this.getSavingsTradeList({ ...request, connectedId })
+    );
 
     return NextResponse.json({ status: 200, data });
   }

@@ -34,8 +34,8 @@ class AccountRegisterService {
       status: 200,
       message: "생성 성공",
       data: {
-        access_token: `Bearer ${jwtUtils().sign(data.connectedId)}`,
-        refresh_token: `Bearer ${jwtUtils().refresh(data.connectedId)}`,
+        access_token: jwtUtils().sign(data.connectedId),
+        refresh_token: jwtUtils().refresh(data.connectedId),
       },
     });
   }
