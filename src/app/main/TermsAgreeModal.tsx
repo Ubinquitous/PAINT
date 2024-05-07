@@ -5,30 +5,35 @@ import Check from "~/components/icons/Check";
 import { flex, font, theme } from "~/styles";
 import TermsContentModal from "./TermsContentModal";
 import Button from "~/components/atoms/Button";
-import { css } from "@linaria/core";
 
 const TermsAgreeModal: FC<{ onClose: () => void }> = ({ onClose }) => {
-  const [openTargetTermsId, setOpenTargetTermsId] = useState(0);
-  const [agreedTermIdList, setAgreedTermIdList] = useState<Array<number>>([]);
+  const [openTargetTermsName, setOpenTargetTermsName] = useState("");
+  const [agreedTermIdList, setAgreedTermIdList] = useState<Array<string>>([]);
   const isAgreedAllOfTerms = agreedTermIdList.length === termsList.length;
-  const isTermIdInAgreedList = (id: number) => agreedTermIdList.includes(id);
+  const isTermIdInAgreedList = (name: string) =>
+    agreedTermIdList.includes(name);
 
-  const getTermsCheckColor = (id: number) => {
-    if (isTermIdInAgreedList(id)) return theme.primary;
+  const getTermsCheckColor = (name: string) => {
+    if (isTermIdInAgreedList(name)) return theme.primary;
     return theme.lightgray;
   };
 
-  const handleTermsAgreeClick = (id: number) => {
-    if (isTermIdInAgreedList(id))
-      return setAgreedTermIdList((prev) => prev.filter((tId) => tId !== id));
-    return setAgreedTermIdList((prev) => [...new Set([...prev, id])]);
+  const handleTermsAgreeClick = (name: string) => {
+    if (isTermIdInAgreedList(name))
+      return setAgreedTermIdList((prev) => prev.filter((tId) => tId !== name));
+    return setAgreedTermIdList((prev) => [...new Set([...prev, name])]);
   };
 
   const handleAllOfTermsAgreeClick = () => {
     const isNotAgreedAllOfTerms = agreedTermIdList.length < termsList.length;
     if (isNotAgreedAllOfTerms)
-      setAgreedTermIdList(termsList.map((term) => term.id));
+      setAgreedTermIdList(termsList.map((term) => term.name));
     else setAgreedTermIdList([]);
+  };
+
+  const handleCloseContentModal = (name: string) => {
+    setOpenTargetTermsName("");
+    setAgreedTermIdList((prev) => [...new Set([...prev, name])]);
   };
 
   return (
@@ -52,7 +57,7 @@ const TermsAgreeModal: FC<{ onClose: () => void }> = ({ onClose }) => {
         </AllOfTermsAgreeContainer>
         {termsList.map((terms) => (
           <Row
-            key={terms.id}
+            key={terms.name}
             as="hgroup"
             alignItems="center"
             justifyContent="space-between"
@@ -61,24 +66,26 @@ const TermsAgreeModal: FC<{ onClose: () => void }> = ({ onClose }) => {
               as="figure"
               gap="12px"
               alignItems="center"
-              onClick={() => handleTermsAgreeClick(terms.id)}
+              onClick={() => handleTermsAgreeClick(terms.name)}
             >
               <Check
                 width={26}
                 height={26}
-                fill={getTermsCheckColor(terms.id)}
+                fill={getTermsCheckColor(terms.name)}
               />
               <TermsText>{terms.contents}</TermsText>
             </Row>
-            {terms.isDetail && (
-              <TermsCheckButton onClick={() => setOpenTargetTermsId(terms.id)}>
+            {terms.name !== "14" && (
+              <TermsCheckButton
+                onClick={() => setOpenTargetTermsName(terms.name)}
+              >
                 보기
               </TermsCheckButton>
             )}
-            {!!openTargetTermsId && (
+            {!!openTargetTermsName && (
               <TermsContentModal
-                id={openTargetTermsId}
-                onClose={() => setOpenTargetTermsId(0)}
+                name={openTargetTermsName}
+                onClose={() => handleCloseContentModal(openTargetTermsName)}
               />
             )}
           </Row>
@@ -90,10 +97,19 @@ const TermsAgreeModal: FC<{ onClose: () => void }> = ({ onClose }) => {
 };
 
 const termsList = [
-  { id: 1, contents: "(필수) 만 14세 이상입니다.", isDetail: false },
-  { id: 2, contents: "(필수) 서비스 이용약관 동의", isDetail: true },
-  { id: 3, contents: "(필수) 개인정보 처리방침 동의", isDetail: true },
-  { id: 4, contents: "(필수) 민감한 정보 수집 및 이용 동의", isDetail: true },
+  { name: "14", contents: "(필수) 만 14세 이상입니다." },
+  {
+    name: "개인정보처리동의서",
+    contents: "(필수) 개인정보 처리 동의",
+  },
+  {
+    name: "고유식별정보처리동의서",
+    contents: "(필수) 고유식별정보 처리 동의",
+  },
+  {
+    name: "민감정보처리동의서",
+    contents: "(필수) 민감정보 처리 동의",
+  },
 ];
 
 const Background = styled.section`
@@ -105,8 +121,6 @@ const Background = styled.section`
   background-color: ${theme.gray};
   opacity: 0.5;
 `;
-
-const moveTopAnimation = css``;
 
 const Container = styled.section`
   position: fixed;
@@ -121,6 +135,7 @@ const Container = styled.section`
   gap: 34px;
   background-color: ${theme.white};
   animation: moveTop 0.8s forwards;
+  overflow-y: scroll;
   ${flex.COLUMN_FLEX};
 `;
 
