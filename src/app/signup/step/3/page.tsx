@@ -10,12 +10,12 @@ import { useRouter } from "next/navigation";
 import { CoinEmoji } from "~/components/images";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import { certQuery } from "~/app/services/cert/query";
+import { certQuery } from "~/services/cert/query";
 import { BounceLoader } from "react-spinners";
 import * as L from "./style";
 import { Column } from "~/components/Flex";
 import Input from "~/components/atoms/Input";
-import { useCertPasswordMatchMutation } from "~/app/services/cert/mutation";
+import { useCertPasswordMatchMutation } from "~/services/cert/mutation";
 
 const SignupStep3 = () => {
   const [isConnect, setIsConnect] = useState(false);
@@ -27,7 +27,7 @@ const SignupStep3 = () => {
   });
   const { mutateAsync } = useCertPasswordMatchMutation();
   const router = useRouter();
-  const [signup, setSignup] = useAtom(signupContext);
+  const [, setSignup] = useAtom(signupContext);
 
   const handleVerfiyCertificate = async () => {
     const data = await mutateAsync({

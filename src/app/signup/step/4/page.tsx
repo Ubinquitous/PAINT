@@ -6,11 +6,11 @@ import Button from "~/components/atoms/Button";
 import { useAtom } from "jotai";
 import { signupContext } from "~/context";
 import { useRouter } from "next/navigation";
-import { bankRecord } from "~/app/data";
+import { bankRecord } from "~/data";
 import * as L from "./style";
 import { CheckIcon } from "~/components/icons";
 import { theme } from "~/styles";
-import { useAddBank, useSignUp } from "~/app/services/auth/mutation";
+import { useAddBank, useSignUp } from "~/services/auth/mutation";
 import { AccountRegisterRequestDto } from "~/app/api/account/register/AccountRegisterRequestDto";
 
 const SignupStep4 = () => {
