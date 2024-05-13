@@ -1,7 +1,7 @@
 import React, { SVGProps } from "react";
 import { theme } from "~/styles";
 
-const Check = ({ fill, ...props }: SVGProps<SVGSVGElement>) => {
+const CheckIcon = ({ fill, ...props }: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       width="31"
@@ -30,4 +30,4 @@ const Check = ({ fill, ...props }: SVGProps<SVGSVGElement>) => {
   );
 };
 
-export default Check;
+export default CheckIcon;
