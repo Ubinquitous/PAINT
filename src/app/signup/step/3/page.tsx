@@ -30,22 +30,27 @@ const SignupStep3 = () => {
   const [signup, setSignup] = useAtom(signupContext);
 
   const handleVerfiyCertificate = async () => {
-    try {
-      const { data } = await mutateAsync({
-        certPassword,
-        certPath: selectedCert["cert.der.path"],
-        keyPath: selectedCert["cert.key.path"],
-      });
-      setSignup((prev) => ({
-        ...prev,
-        certFile: data,
-      }));
-      router.push("/signup/step/4");
-    } catch {}
+    const data = await mutateAsync({
+      certPassword,
+      certPath: selectedCert["cert.der.path"],
+      keyPath: selectedCert["cert.key.path"],
+    });
+    if (data.status === 400) return alert("비밀번호가 일치하지 않아요.");
+    setSignup((prev) => ({
+      ...prev,
+      certFile: data.data,
+      password: certPassword,
+    }));
+    router.push("/signup/step/4");
   };
 
   const generateCertListComponent = () => {
-    if (!isSuccess) return <BounceLoader color={theme.primary} />;
+    if (!isSuccess)
+      return (
+        <L.ImageContainer>
+          <BounceLoader color={theme.primary} size={30} />
+        </L.ImageContainer>
+      );
     return (
       <Column width="100%" gap="42px">
         <Column width="100%" gap="12px">
@@ -100,6 +105,7 @@ const SignupStep3 = () => {
       {createElement(
         Button,
         {
+          disabled: isConnect ? !(isSuccess && certPassword) : false,
           onClick: isConnect
             ? handleVerfiyCertificate
             : () => setIsConnect((_) => true),
