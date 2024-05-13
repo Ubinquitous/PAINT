@@ -11,7 +11,7 @@ model User {
   connectedId   String @id
   password      String @db.Text()
   birthDate     String
-  identity      String @unique
+  certFile      String @db.Text()
   userName      String
 }
 
