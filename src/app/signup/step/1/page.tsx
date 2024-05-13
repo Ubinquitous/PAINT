@@ -18,7 +18,7 @@ const SignupStep1 = () => {
   const handleProfileNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     if (value.length <= NAME_MAX_LENGTH)
-      setSignup((prev) => ({ ...prev, name: value }));
+      setSignup((prev) => ({ ...prev, userName: value }));
   };
 
   return (
@@ -28,14 +28,14 @@ const SignupStep1 = () => {
     >
       <L.Container>
         <Input
-          value={signup.name}
+          value={signup.userName}
           onChange={handleProfileNameChange}
           placeholder="이름을 입력해주세요"
           maxLetterLength={6}
           activeLetterCount
         />
         <Button
-          disabled={!signup.name}
+          disabled={!signup.userName}
           onClick={() => router.push("/signup/step/2")}
         >
           다음
