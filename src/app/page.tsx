@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 const Splash = () => {
   const router = useRouter();
-  setTimeout(() => router.push("/main"), 1500);
+  setTimeout(() => router.push("/landing"), 1500);
 
   return (
     <L.SplashContainer>
