@@ -13,11 +13,19 @@ export const Separator = styled.div`
   ${font.H2};
 
   &:after {
-    content: "/";
+    content: "-";
   }
 `;
 
 export const WarningText = styled.span`
   color: ${theme.red};
   ${font.H3};
+`;
+
+export const RegisterLastText = styled.span`
+  padding: 0 30px;
+  ${font.H2};
+  &:after {
+    content: "𒊹𒊹𒊹𒊹𒊹𒊹𒊹";
+  }
 `;
