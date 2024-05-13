@@ -1,14 +1,16 @@
 import { styled } from "@linaria/react";
 import React, { FC, useState } from "react";
 import { Column, Row } from "~/components/Flex";
-import Check from "~/components/icons/Check";
+import { CheckIcon } from "~/components/icons";
 import { flex, font, theme } from "~/styles";
 import TermsContentModal from "./TermsContentModal";
 import Button from "~/components/atoms/Button";
+import { useRouter } from "next/navigation";
 
 const TermsAgreeModal: FC<{ onClose: () => void }> = ({ onClose }) => {
   const [openTargetTermsName, setOpenTargetTermsName] = useState("");
   const [agreedTermIdList, setAgreedTermIdList] = useState<Array<string>>([]);
+  const router = useRouter();
   const isAgreedAllOfTerms = agreedTermIdList.length === termsList.length;
   const isTermIdInAgreedList = (name: string) =>
     agreedTermIdList.includes(name);
@@ -31,9 +33,9 @@ const TermsAgreeModal: FC<{ onClose: () => void }> = ({ onClose }) => {
     else setAgreedTermIdList([]);
   };
 
-  const handleCloseContentModal = (name: string) => {
+  const handleCloseContentModal = (name: string, isAgreed: boolean) => {
     setOpenTargetTermsName("");
-    setAgreedTermIdList((prev) => [...new Set([...prev, name])]);
+    if (isAgreed) setAgreedTermIdList((prev) => [...new Set([...prev, name])]);
   };
 
   return (
@@ -47,7 +49,9 @@ const TermsAgreeModal: FC<{ onClose: () => void }> = ({ onClose }) => {
           </TermsDescription>
         </Column>
         <AllOfTermsAgreeContainer onClick={handleAllOfTermsAgreeClick}>
-          <Check fill={isAgreedAllOfTerms ? theme.primary : theme.lightgray} />
+          <CheckIcon
+            fill={isAgreedAllOfTerms ? theme.primary : theme.lightgray}
+          />
           <Column>
             <AllOfTermsAgreeText>모두 동의</AllOfTermsAgreeText>
             <AllOfTermsAgreeDescription>
@@ -56,19 +60,14 @@ const TermsAgreeModal: FC<{ onClose: () => void }> = ({ onClose }) => {
           </Column>
         </AllOfTermsAgreeContainer>
         {termsList.map((terms) => (
-          <Row
-            key={terms.name}
-            as="hgroup"
-            alignItems="center"
-            justifyContent="space-between"
-          >
+          <TermsItem key={terms.name}>
             <Row
               as="figure"
               gap="12px"
               alignItems="center"
               onClick={() => handleTermsAgreeClick(terms.name)}
             >
-              <Check
+              <CheckIcon
                 width={26}
                 height={26}
                 fill={getTermsCheckColor(terms.name)}
@@ -85,12 +84,19 @@ const TermsAgreeModal: FC<{ onClose: () => void }> = ({ onClose }) => {
             {!!openTargetTermsName && (
               <TermsContentModal
                 name={openTargetTermsName}
-                onClose={() => handleCloseContentModal(openTargetTermsName)}
+                onClose={(isAgreed: boolean) =>
+                  handleCloseContentModal(openTargetTermsName, isAgreed)
+                }
               />
             )}
-          </Row>
+          </TermsItem>
         ))}
-        <Button disabled={!isAgreedAllOfTerms}>시작하기</Button>
+        <Button
+          onClick={() => router.push("/signup/step/1")}
+          disabled={!isAgreedAllOfTerms}
+        >
+          시작하기
+        </Button>
       </Container>
     </>
   );
@@ -124,7 +130,7 @@ const Background = styled.section`
 
 const Container = styled.section`
   position: fixed;
-  bottom: -800px;
+  bottom: -1100px;
   left: 0;
   width: 100%;
   height: 66vh;
@@ -136,7 +142,12 @@ const Container = styled.section`
   background-color: ${theme.white};
   animation: moveTop 0.8s forwards;
   overflow-y: scroll;
-  ${flex.COLUMN_FLEX};
+  ${flex.COLUMN_BETWEEN};
+`;
+
+const TermsItem = styled.hgroup`
+  width: 100%;
+  ${flex.BETWEEN};
 `;
 
 const TermsTitle = styled.h1`

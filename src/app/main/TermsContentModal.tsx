@@ -4,16 +4,16 @@ import Button from "~/components/atoms/Button";
 import PDFViewer from "~/components/atoms/PDFViewer";
 import { flex, theme } from "~/styles";
 
-const TermsContentModal: FC<{ name: string; onClose: () => void }> = ({
-  name,
-  onClose,
-}) => {
+const TermsContentModal: FC<{
+  name: string;
+  onClose: (isAgreed: boolean) => void;
+}> = ({ name, onClose }) => {
   return (
     <>
-      <Background onClick={onClose} />
+      <Background onClick={() => onClose(false)} />
       <Container>
         <PDFViewer path={`/terms/${name}.pdf`} scale={200} />
-        <Button onClick={onClose}>동의</Button>
+        <Button onClick={() => onClose(true)}>동의</Button>
       </Container>
     </>
   );
