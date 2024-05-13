@@ -22,9 +22,9 @@ const CheckIcon = ({ fill, ...props }: SVGProps<SVGSVGElement>) => {
       <path
         d="M21.9375 11.6173L13.2708 20.284L8.9375 15.9506"
         stroke="white"
-        stroke-width="2.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
