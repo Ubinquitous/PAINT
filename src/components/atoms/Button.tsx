@@ -13,7 +13,7 @@ const Button = ({ children, ...props }: ButtonProps) => {
 const Container = styled.button<{ varient?: string }>`
   background-color: ${({ varient }) => varient || theme.primary};
   width: 100%;
-  padding: 14px;
+  padding: 16px;
   border-radius: 6px;
   cursor: pointer;
   color: ${theme.white};
