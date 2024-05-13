@@ -18,7 +18,7 @@ class AccountRegisterService {
       return NextResponse.json(validation.error.issues, { status: 400 });
 
     const result = await this.registerAccount(request);
-    const { password, birthDate, identity, userName } = request;
+    const { password, birthDate, certFile, userName } = request;
     const { data } = decodeToJson(result);
 
     await prismaClient.user.create({
@@ -26,7 +26,7 @@ class AccountRegisterService {
         connectedId: data.connectedId,
         password: publicEncRSA(password),
         birthDate,
-        identity,
+        certFile,
         userName,
       },
     });
