@@ -13,6 +13,7 @@ model User {
   birthDate     String
   certFile      String @db.Text()
   userName      String
+  organization  String
 }
 
 model Token {
