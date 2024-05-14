@@ -16,6 +16,7 @@ const GetCertificationListService = () => {
       socket.addEventListener("message", async (message) => {
         const res = JSON.parse(message.data);
 
+        const isTokenError = res[1].data.code === "CF-09991";
         const isError = res[1].data.code === "CF-09992";
         const isSuccessCertificate =
           res[1].call_back === "codefcert_checkLicense" &&
@@ -23,7 +24,7 @@ const GetCertificationListService = () => {
         const isSuccessGetCertList =
           res[1].call_back === "codefcert_getCertification";
 
-        if (isError) {
+        if (isError || isTokenError) {
           await generateCertTokenService.execute();
           sendCertificateToken();
         }
