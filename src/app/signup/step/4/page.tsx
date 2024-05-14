@@ -45,7 +45,7 @@ const SignupStep4 = () => {
       birthDate,
       identity: "",
       countryCode: "KR",
-      organization: bankCodeList[0],
+      organization: JSON.stringify(bankCodeList),
       certFile,
       certType: "pfx",
     };
