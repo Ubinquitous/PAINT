@@ -1,10 +1,11 @@
-import React from "react";
+import React, { SVGProps } from "react";
 
-const Logo = () => {
+const Logo = ({ ...props }: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       width="149"
       height="42"
+      {...props}
       viewBox="0 0 179 59"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
