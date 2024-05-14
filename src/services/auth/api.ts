@@ -11,3 +11,10 @@ export const requestAddBank = async (request: AccountAddRequestDto) => {
   const { data } = await paint.post("/account/add", request, authorization());
   return data;
 };
+
+export const requestLogin = async (certFile: string) => {
+  const { data } = await paint.post("/account/login", null, {
+    headers: { Authorization: certFile },
+  });
+  return data;
+};
