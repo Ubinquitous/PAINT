@@ -1,7 +1,6 @@
 import { prismaClient } from "~/lib/prismaClient";
 import { NextRequest, NextResponse } from "next/server";
 import { publicEncRSA } from "~/lib/publicEncRSA";
-import { getCodefToken } from "~/lib/getCodefToken";
 import { codef } from "../..";
 import { decodeToJson } from "~/lib/decodeToJson";
 import { AccountRegisterVerification } from "./AccountRegisterVerification";
@@ -28,6 +27,7 @@ class AccountRegisterService {
         birthDate,
         certFile,
         userName,
+        organization: request.organization,
       },
     });
     return NextResponse.json({
@@ -48,6 +48,7 @@ class AccountRegisterService {
         accountList: [
           {
             ...dto,
+            organization: JSON.parse(dto.organization)[0],
             password: publicEncRSA(password),
             businessType: "BK",
             clientType: "P", // clientType: 개인
