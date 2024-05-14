@@ -28,14 +28,18 @@ const StepContainer = ({
 
   return (
     <Container>
-      <Header>
-        {isFirstStep ? (
-          blank
-        ) : (
-          <ArrowIcon onClick={handlePrevStepClick} fill={theme.gray} />
-        )}
-        {step}/4
-      </Header>
+      {isNaN(step) ? (
+        <Header />
+      ) : (
+        <Header>
+          {isFirstStep ? (
+            blank
+          ) : (
+            <ArrowIcon onClick={handlePrevStepClick} fill={theme.gray} />
+          )}
+          {step}/4
+        </Header>
+      )}
       <Column gap="12px">
         <Title>{title}</Title>
         {description && <Description>{description}</Description>}
