@@ -1,16 +1,16 @@
-import parse from "url-parse";
 import axios from "axios";
-import { prismaClient } from "~/lib/prismaClient";
 import { NextResponse } from "next/server";
+import parse from "url-parse";
 import environment from "~/lib/globalEnv";
+import { prismaClient } from "~/lib/prismaClient";
 
 class GenerateConnectedTokenService {
   public async execute() {
     const { href: uri } = parse(environment.CLIENT_OAUTH_URL);
-    const header = new Buffer(
-      `${environment.CLIENT_ID}:${environment.CLIENT_SECRET}`
-    ).toString("base64");
+    const basic = `${environment.CLIENT_ID}:${environment.CLIENT_SECRET}`;
+    const header = btoa(basic);
     const data = await this.getConnectedToken(uri, header);
+
     await prismaClient.token.upsert({
       where: { token_name: "connectedId" },
       update: { ...data, token_name: "connectedId" },
