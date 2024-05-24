@@ -1,5 +1,5 @@
-import crypto from "crypto";
 import constants from "constants";
+import crypto from "crypto";
 import environment from "./globalEnv";
 
 export const publicEncRSA = (data: string) => {
@@ -7,7 +7,7 @@ export const publicEncRSA = (data: string) => {
     "-----BEGIN PUBLIC KEY-----\n" +
     environment.PUBLIC_KEY +
     "\n-----END PUBLIC KEY-----";
-  var bufferToEncrypt = new Buffer(data);
+  var bufferToEncrypt = Buffer.from(data);
   var encryptedData = crypto
     .publicEncrypt(
       { key: pubkeyStr, padding: constants.RSA_PKCS1_PADDING },
