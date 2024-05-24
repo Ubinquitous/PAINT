@@ -1,21 +1,21 @@
 "use client";
 
-import React, { createElement, useState } from "react";
-import StepContainer from "../StepContainer";
-import { theme } from "~/styles";
-import Button from "~/components/atoms/Button";
-import { useAtom } from "jotai";
-import { signupContext } from "~/context";
-import { useRouter } from "next/navigation";
-import { CoinEmoji } from "~/components/images";
-import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import { certQuery } from "~/services/cert/query";
+import { useAtom } from "jotai";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { createElement, useState } from "react";
 import { BounceLoader } from "react-spinners";
-import * as L from "./style";
 import { Column } from "~/components/Flex";
+import Button from "~/components/atoms/Button";
 import Input from "~/components/atoms/Input";
+import { CoinEmoji } from "~/components/images";
+import { signupContext } from "~/context";
 import { useCertPasswordMatchMutation } from "~/services/cert/mutation";
+import { certQuery } from "~/services/cert/query";
+import { theme } from "~/styles";
+import StepContainer from "../StepContainer";
+import * as L from "./style";
 
 const SignupStep3 = () => {
   const [isConnect, setIsConnect] = useState(false);
@@ -49,6 +49,16 @@ const SignupStep3 = () => {
       return (
         <L.ImageContainer>
           <BounceLoader color={theme.primary} size={30} />
+        </L.ImageContainer>
+      );
+    if (!data.data)
+      return (
+        <L.ImageContainer>
+          <L.CertNotFoundText>
+            공동인증서를 찾을 수 없어요.
+            <br />
+            공동인증서 다운로드 후 다시 시도해주세요.
+          </L.CertNotFoundText>
         </L.ImageContainer>
       );
     return (
