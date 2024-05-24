@@ -7,6 +7,12 @@ export const Container = styled.figure`
   ${flex.COLUMN_BETWEEN};
 `;
 
+export const CertNotFoundText = styled.h1`
+  text-align: center;
+  color: ${theme.gray};
+  ${font.H2};
+`;
+
 export const CertTitle = styled.h1`
   color: ${theme.gray};
   ${font.H4};
