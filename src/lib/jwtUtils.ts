@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const secret = process.env.NEXT_PUBLIC_JWT_SECRET!;
+const secret = process.env.NEXT_PUBLIC_PUBLIC_KEY!;
 
 export const jwtUtils = () => {
   const sign = (connectedId: string) => {
