@@ -1,12 +1,12 @@
-import { prismaClient } from "~/lib/prismaClient";
 import { NextRequest, NextResponse } from "next/server";
+import { codefAuthorization } from "~/lib/codefAuthorization";
+import { decodeToJson } from "~/lib/decodeToJson";
+import { jwtUtils } from "~/lib/jwtUtils";
+import { prismaClient } from "~/lib/prismaClient";
 import { publicEncRSA } from "~/lib/publicEncRSA";
 import { codef } from "../..";
-import { decodeToJson } from "~/lib/decodeToJson";
-import { AccountRegisterVerification } from "./AccountRegisterVerification";
 import { AccountRegisterRequestDto } from "./AccountRegisterRequestDto";
-import { jwtUtils } from "~/lib/jwtUtils";
-import { codefAuthorization } from "~/lib/codefAuthorization";
+import { AccountRegisterVerification } from "./AccountRegisterVerification";
 
 class AccountRegisterService {
   public async execute(req: NextRequest) {
@@ -20,6 +20,7 @@ class AccountRegisterService {
     const { password, birthDate, certFile, userName } = request;
     const { data } = decodeToJson(result);
 
+    console.log(data);
     await prismaClient.user.create({
       data: {
         connectedId: data.connectedId,
