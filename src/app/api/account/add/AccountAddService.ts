@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { codefAuthorization } from "~/lib/codefAuthorization";
+import { getAuthorizationToken } from "~/lib/getAuthorizationToken";
+import { jwtUtils } from "~/lib/jwtUtils";
 import { publicEncRSA } from "~/lib/publicEncRSA";
 import { codef } from "../..";
 import { AccountAddRequestDto } from "./AccountAddRequestDto";
 import { AccountAddVerification } from "./AccountAddVerification";
-import { codefAuthorization } from "~/lib/codefAuthorization";
-import { jwtUtils } from "~/lib/jwtUtils";
-import { getAuthorizationToken } from "~/lib/getAuthorizationToken";
 
 class AccountAddService {
   public async execute(req: NextRequest) {
