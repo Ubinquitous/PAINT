@@ -10,6 +10,8 @@ class AccountLoginService {
     const [data] = await prismaClient.user.findMany({
       where: { certFile },
     });
+    console.log(certFile);
+    console.log(data);
 
     if (!data)
       return NextResponse.json({
