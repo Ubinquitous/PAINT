@@ -46,7 +46,7 @@ const Description = styled.p`
 `;
 
 const CardImage = styled(Image)`
-  width: 50px;
+  width: 70px;
   height: auto;
   border-radius: 8px;
 `;
