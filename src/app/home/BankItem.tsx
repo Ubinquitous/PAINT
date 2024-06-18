@@ -1,11 +1,12 @@
 import { styled } from "@linaria/react";
 import Image from "next/image";
+import { HTMLAttributes } from "react";
 import { Column } from "~/components/Flex";
 import { bankRecord } from "~/data";
 import { flex, font, theme } from "~/styles";
 import { withComma } from "~/utils";
 
-interface BankItemProps {
+interface BankItemProps extends HTMLAttributes<HTMLLIElement> {
   organization: string;
   accountName: string;
   balance: number;
@@ -13,13 +14,18 @@ interface BankItemProps {
 
 const ACCOUNT_NAME_LENGTH = 12;
 
-const BankItem = ({ organization, accountName, balance }: BankItemProps) => {
+const BankItem = ({
+  organization,
+  accountName,
+  balance,
+  ...props
+}: BankItemProps) => {
   const accountSlicedName =
     accountName.length > ACCOUNT_NAME_LENGTH
       ? `${accountName.slice(0, ACCOUNT_NAME_LENGTH)}...`
       : accountName;
   return (
-    <Container>
+    <Container {...props}>
       <BankIcon
         src={`/assets/bank/${organization}.png`}
         alt={`${bankRecord[organization]}`}
