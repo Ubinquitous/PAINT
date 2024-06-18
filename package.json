@@ -19,6 +19,7 @@
     "axios": "^1.6.8",
     "constants": "^0.0.2",
     "crypto": "^1.0.1",
+    "dayjs": "^1.11.11",
     "https": "^1.0.0",
     "jotai": "^2.8.0",
     "jsonwebtoken": "^9.0.2",
