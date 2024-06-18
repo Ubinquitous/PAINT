@@ -1,12 +1,21 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
+import Loader from "~/components/atoms/Loader";
 import Footer from "~/components/common/Footer";
 import { Logo } from "~/components/icons";
+import { accountQuery } from "~/services/account/query";
 import { withComma } from "~/utils";
+import { GetAccountListDto } from "../api/account/list/GetAccountListDto";
 import BankItem from "./BankItem";
 import * as L from "./style";
 
 const Page = () => {
+  const { data: accountList, isSuccess } = useQuery({
+    ...accountQuery.getAccountList(),
+  });
+  console.log(accountList);
+
   return (
     <L.Container>
       <L.Header>
@@ -27,24 +36,23 @@ const Page = () => {
           height={999}
         />
         <L.AccountText>내 계좌</L.AccountText>
-        <L.BankList>
-          <BankItem
-            organization="0032"
-            accountName="자유저축통장"
-            balance={1_294_500}
-          />
-          <BankItem
-            organization="0088"
-            accountName="주거래우대통장"
-            balance={182_000}
-          />
-          <BankItem
-            organization="0034"
-            accountName="주택청약"
-            balance={420_000}
-          />
-        </L.BankList>
+        {isSuccess ? (
+          <L.BankList>
+            {accountList.data.map((account: GetAccountListDto) => (
+              <BankItem
+                key={account.id}
+                organization={account.organization}
+                accountName={account.accountName}
+                balance={account.accountBalance}
+              />
+            ))}
+            {/* <L.BodyFucker /> */}
+          </L.BankList>
+        ) : (
+          <Loader />
+        )}
       </L.Body>
+      <L.BodyScroller />
       <Footer />
     </L.Container>
   );

@@ -35,12 +35,18 @@ export const SubTitle = styled.p`
 export const Body = styled.main`
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
   background-color: ${theme.white};
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
   padding: 30px;
   gap: 32px;
   ${flex.COLUMN_FLEX};
+`;
+
+export const BodyScroller = styled.div`
+  width: 100%;
+  height: 10%;
 `;
 
 export const BannerImage = styled(Image)`
@@ -54,5 +60,6 @@ export const AccountText = styled.h1`
 
 export const BankList = styled.ul`
   gap: 46px;
+  width: 100%;
   ${flex.COLUMN_FLEX};
 `;
