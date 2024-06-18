@@ -63,3 +63,9 @@ export const BankList = styled.ul`
   width: 100%;
   ${flex.COLUMN_FLEX};
 `;
+
+export const NewsList = styled.ul`
+  width: 100%;
+  gap: 22px;
+  ${flex.COLUMN_FLEX};
+`;
