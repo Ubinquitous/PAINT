@@ -6,7 +6,7 @@ export const jwtUtils = () => {
   const sign = (connectedId: string) => {
     return jwt.sign({ id: connectedId }, secret, {
       algorithm: "HS256",
-      expiresIn: "24h",
+      expiresIn: "30d",
     });
   };
 
