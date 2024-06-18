@@ -11,7 +11,13 @@ interface BankItemProps {
   balance: number;
 }
 
+const ACCOUNT_NAME_LENGTH = 12;
+
 const BankItem = ({ organization, accountName, balance }: BankItemProps) => {
+  const accountSlicedName =
+    accountName.length > ACCOUNT_NAME_LENGTH
+      ? `${accountName.slice(0, ACCOUNT_NAME_LENGTH)}...`
+      : accountName;
   return (
     <Container>
       <BankIcon
@@ -21,7 +27,7 @@ const BankItem = ({ organization, accountName, balance }: BankItemProps) => {
         height={999}
       />
       <Column>
-        <AccountName>{accountName}</AccountName>
+        <AccountName>{accountSlicedName}</AccountName>
         <AccountBalance>{withComma(balance)}원</AccountBalance>
       </Column>
       <CheckButton>조회</CheckButton>
