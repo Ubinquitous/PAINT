@@ -6,7 +6,7 @@ import { prismaClient } from "~/lib/prismaClient";
 class GetCommonTradeListService {
   public async execute(req: NextRequest) {
     const { connectedId } = jwtUtils().verify(getAuthorizationToken());
-    const { accountNumber } = await req.json();
+    const accountNumber = req.nextUrl.pathname.replace("/api/trade/", "");
 
     const { id: accountId } =
       (await prismaClient.account.findFirst({
