@@ -14,7 +14,6 @@ const Page = () => {
   const { data: accountList, isSuccess } = useQuery({
     ...accountQuery.getAccountList(),
   });
-  console.log(accountList);
 
   return (
     <L.Container>

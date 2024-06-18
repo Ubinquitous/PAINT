@@ -1,3 +1,9 @@
-export { default as Logo } from "./Logo";
 export { default as ArrowIcon } from "./ArrowIcon";
+export { default as BookIcon } from "./BookIcon";
+export { default as ChartIcon } from "./ChartIcon";
 export { default as CheckIcon } from "./CheckIcon";
+export { default as HomeIcon } from "./HomeIcon";
+export { default as InvestIcon } from "./InvestIcon";
+export { default as Logo } from "./Logo";
+export { default as PensionIcon } from "./PensionIcon";
+export { default as SpendIcon } from "./SpendIcon";

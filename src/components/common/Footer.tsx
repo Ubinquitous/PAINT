@@ -1,26 +1,37 @@
 import { styled } from "@linaria/react";
+import { usePathname } from "next/navigation";
 import { flex, font, theme } from "~/styles";
-import BookIcon from "../icons/BookIcon";
-import HomeIcon from "../icons/HomeIcon";
-import InvestIcon from "../icons/InvestIcon";
-import SpendIcon from "../icons/SpendIcon";
+import {
+  BookIcon,
+  HomeIcon,
+  InvestIcon,
+  PensionIcon,
+  SpendIcon,
+} from "../icons";
 
 const navigateList = [
-  { icon: <HomeIcon />, name: "홈" },
-  { icon: <SpendIcon />, name: "지출" },
-  { icon: <InvestIcon />, name: "주식" },
-  { icon: <BookIcon />, name: "뉴스" },
+  { icon: HomeIcon, name: "홈", router: "/home" },
+  { icon: SpendIcon, name: "관리", router: "/analysis" },
+  { icon: InvestIcon, name: "주식", router: "/invest" },
+  { icon: BookIcon, name: "뉴스", router: "/news" },
+  { icon: PensionIcon, name: "연금", router: "/pension" },
 ];
 
 const Footer = () => {
+  const currentPath = usePathname();
+
   return (
     <Container>
-      {navigateList.map((navigate) => (
-        <Navigate key={navigate.name}>
-          {navigate.icon}
-          <NavigateText>{navigate.name}</NavigateText>
-        </Navigate>
-      ))}
+      {navigateList.map((navigate) => {
+        const isCurrent = currentPath === navigate.router;
+        const NavigationIcon = navigate.icon;
+        return (
+          <Navigate key={navigate.name}>
+            <NavigationIcon fill={isCurrent ? theme.primary : theme.grey} />
+            <NavigateText isCurrent={isCurrent}>{navigate.name}</NavigateText>
+          </Navigate>
+        );
+      })}
     </Container>
   );
 };
@@ -42,9 +53,9 @@ const Navigate = styled.li`
   ${flex.COLUMN_CENTER};
 `;
 
-const NavigateText = styled.span`
+const NavigateText = styled.span<{ isCurrent?: boolean }>`
   ${font.H3};
-  color: ${theme.grey};
+  color: ${(props) => (props.isCurrent ? theme.primary : theme.grey)};
   margin-top: auto;
 `;
 
