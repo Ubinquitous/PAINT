@@ -6,6 +6,7 @@ import Loader from "~/components/atoms/Loader";
 import Footer from "~/components/common/Footer";
 import { Logo } from "~/components/icons";
 import { useModal } from "~/hooks/useModal";
+import { useUser } from "~/hooks/useUser";
 import { accountQuery } from "~/services/account/query";
 import { withComma } from "~/utils";
 import { GetAccountListDto } from "../api/account/list/GetAccountListDto";
@@ -17,6 +18,7 @@ import * as L from "./style";
 const Page = () => {
   const month = dayjs().month() + 1;
   const { openModal } = useModal();
+  const { user } = useUser();
   const { data: spendList, isSuccess: spendListSuccess } = useQuery(
     accountQuery.getSpendOfMonth(month)
   );
@@ -35,7 +37,7 @@ const Page = () => {
           <Logo width={60} />
         </L.LogoWrap>
         <L.Title>
-          박우빈님, 오늘도 <br />
+          {user.userName}님, 오늘도 <br />
           현명한 소비 하셨나요?
         </L.Title>
         <L.SubTitle>
