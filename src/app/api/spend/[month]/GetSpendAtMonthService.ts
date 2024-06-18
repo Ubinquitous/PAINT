@@ -25,8 +25,6 @@ class GetSpendAtMonthService {
       },
     });
 
-    console.log(tradeList);
-
     const incomeTradeList = tradeList.filter((trade) => trade.category === "+");
     const expenditureTradeList = tradeList.filter(
       (trade) => trade.category === "-"
@@ -42,11 +40,12 @@ class GetSpendAtMonthService {
       },
       {}
     );
-    const topOfSumIncomeByCorrespondent = Object.fromEntries(
-      Object.entries(sumIncomeByCorrespondent)
-        .sort((a, b) => (b[1] as any) - (a[1] as any))
-        .slice(0, 5)
-    );
+    const topOfSumIncomeByCorrespondent = Object.entries(
+      sumIncomeByCorrespondent
+    )
+      .sort((a, b) => (b[1] as any) - (a[1] as any))
+      .slice(0, 5)
+      .map((s) => ({ name: s[0], amount: s[1] }));
 
     const sumExpenditureByCorrespondent = expenditureTradeList.reduce(
       (acc: any, transaction) => {
@@ -57,11 +56,12 @@ class GetSpendAtMonthService {
       },
       {}
     );
-    const topOfSumExpenditureByCorrespondent = Object.fromEntries(
-      Object.entries(sumExpenditureByCorrespondent)
-        .sort((a, b) => (b[1] as any) - (a[1] as any))
-        .slice(0, 5)
-    );
+    const topOfSumExpenditureByCorrespondent = Object.entries(
+      sumExpenditureByCorrespondent
+    )
+      .sort((a, b) => (b[1] as any) - (a[1] as any))
+      .slice(0, 5)
+      .map((s) => ({ name: s[0], amount: s[1] }));
 
     /** top of payment method */
     const sumIncomeByPaymentMethod = incomeTradeList.reduce(
@@ -73,11 +73,12 @@ class GetSpendAtMonthService {
       },
       {}
     );
-    const topOfSumIncomeByPaymentMethod = Object.fromEntries(
-      Object.entries(sumIncomeByPaymentMethod)
-        .sort((a, b) => (b[1] as any) - (a[1] as any))
-        .slice(0, 5)
-    );
+    const topOfSumIncomeByPaymentMethod = Object.entries(
+      sumIncomeByPaymentMethod
+    )
+      .sort((a, b) => (b[1] as any) - (a[1] as any))
+      .slice(0, 5)
+      .map((s) => ({ name: s[0], amount: s[1] }));
 
     const sumExpenditureByPaymentMethod = expenditureTradeList.reduce(
       (acc: any, transaction) => {
@@ -88,11 +89,13 @@ class GetSpendAtMonthService {
       },
       {}
     );
-    const topOfSumExpenditureByPaymentMethod = Object.fromEntries(
-      Object.entries(sumExpenditureByPaymentMethod)
-        .sort((a, b) => (b[1] as any) - (a[1] as any))
-        .slice(0, 5)
-    );
+
+    const topOfSumExpenditureByPaymentMethod = Object.entries(
+      sumExpenditureByPaymentMethod
+    )
+      .sort((a, b) => (b[1] as any) - (a[1] as any))
+      .slice(0, 5)
+      .map((s) => ({ name: s[0], amount: s[1] }));
 
     /** top of list */
     const topOfIncomeList = incomeTradeList
