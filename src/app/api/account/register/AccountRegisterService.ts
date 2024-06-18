@@ -1,6 +1,10 @@
+import console from "console";
+import dayjs from "dayjs";
 import { NextRequest, NextResponse } from "next/server";
 import { codefAuthorization } from "~/lib/codefAuthorization";
 import { decodeToJson } from "~/lib/decodeToJson";
+import { ConnectedCommonVerifyRequestDto } from "~/lib/dto/ConnectedCommonVerifyRequestDto";
+import { ConnectedVerifyRequestDto } from "~/lib/dto/ConnectedVerifyRequestDto";
 import { jwtUtils } from "~/lib/jwtUtils";
 import { prismaClient } from "~/lib/prismaClient";
 import { publicEncRSA } from "~/lib/publicEncRSA";
@@ -17,20 +21,88 @@ class AccountRegisterService {
       return NextResponse.json(validation.error.issues, { status: 400 });
 
     const result = await this.registerAccount(request);
-    const { password, birthDate, certFile, userName } = request;
+    const {
+      password,
+      birthDate,
+      certFile,
+      userName,
+      organization: organizationList,
+    } = request;
+    console.log(result);
     const { data } = decodeToJson(result);
+    const { connectedId } = data;
+    const organization = JSON.parse(organizationList)[0];
 
-    console.log(data);
     await prismaClient.user.create({
       data: {
-        connectedId: data.connectedId,
         password: publicEncRSA(password),
+        connectedId,
         birthDate,
         certFile,
         userName,
-        organization: request.organization,
+        organization,
       },
     });
+
+    const accountResult = await this.getAccountList({
+      connectedId,
+      organization,
+    });
+
+    const { data: account } = decodeToJson(accountResult);
+
+    const threeMonthsAgo = dayjs().subtract(3, "month");
+    const endDate = dayjs().format("YYYYMMDD");
+    const startDate = threeMonthsAgo.format("YYYYMMDD");
+
+    if (Array.isArray(account.resDepositTrust)) {
+      for (const deposit of account.resDepositTrust) {
+        const { id: accountId } = await prismaClient.account.create({
+          data: {
+            connectedId,
+            accountName: deposit.resAccountName,
+            accountNumber: deposit.resAccount,
+            accountDisplay: deposit.resAccountDisplay,
+            accountBalance: Number(deposit.resAccountBalance),
+            accountCreatedAt: deposit.resAccountStartDate,
+            accountRefreshedAt: deposit.resLastTranDate,
+          },
+        });
+
+        const tradeResult = await this.getCommonTradeList({
+          organization,
+          connectedId,
+          account: deposit.resAccount,
+          startDate,
+          endDate,
+        });
+        const { data: tradeList } = decodeToJson(tradeResult);
+
+        if (Array.isArray(tradeList.resTrHistoryList)) {
+          for (const trade of tradeList.resTrHistoryList) {
+            const isExpenditure = !!Number(trade.resAccountIn);
+            const amount = isExpenditure
+              ? Number(trade.resAccountIn)
+              : Number(trade.resAccountOut);
+            const category = isExpenditure ? "+" : "-";
+            const date = `${trade.resAccountTrDate}${trade.resAccountTrTime}`;
+            const tradedAt = dayjs(date, "YYYYMMDDHHmmss").format();
+            await prismaClient.trade.create({
+              data: {
+                tradedAt,
+                amount,
+                category,
+                paymentMethod: trade.resAccountDesc2,
+                correspondent: trade.resAccountDesc3,
+                afterBalance: Number(trade.resAfterTranBalance),
+                accountId,
+              },
+            });
+          }
+        }
+      }
+    }
+
     return NextResponse.json({
       status: 200,
       message: "생성 성공",
@@ -42,14 +114,14 @@ class AccountRegisterService {
   }
 
   private async registerAccount(dto: AccountRegisterRequestDto) {
-    const { password } = dto;
+    const { password, organization } = dto;
     const { data } = await codef.post(
       "/v1/account/create",
       {
         accountList: [
           {
             ...dto,
-            organization: JSON.parse(dto.organization)[0],
+            organization: JSON.parse(organization)[0],
             password: publicEncRSA(password),
             businessType: "BK",
             clientType: "P", // clientType: 개인
@@ -63,6 +135,26 @@ class AccountRegisterService {
       },
       await codefAuthorization()
     );
+    return data;
+  }
+
+  private async getAccountList(request: ConnectedCommonVerifyRequestDto) {
+    const { data } = await codef.get("/v1/kr/bank/p/account/account-list", {
+      data: request,
+      ...(await codefAuthorization()),
+    });
+    return data;
+  }
+
+  private async getCommonTradeList(request: ConnectedVerifyRequestDto) {
+    const { data } = await codef.get("/v1/kr/bank/p/account/transaction-list", {
+      data: {
+        ...request,
+        orderBy: "0",
+        inquiryType: "1",
+      },
+      ...(await codefAuthorization()),
+    });
     return data;
   }
 }
