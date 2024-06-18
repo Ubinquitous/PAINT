@@ -47,6 +47,7 @@ class AccountAddService {
           },
           create: {
             connectedId,
+            organization,
             accountName: deposit.resAccountName,
             accountNumber: deposit.resAccount,
             accountDisplay: deposit.resAccountDisplay,
