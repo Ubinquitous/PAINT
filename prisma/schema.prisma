@@ -7,6 +7,14 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Token {
+  token_name    String @unique @id
+  access_token  String @db.Text()
+  scope         String
+  token_type    String
+  expires_in    Int
+}
+
 model User {
   connectedId   String @id
   password      String @db.Text()
@@ -14,12 +22,30 @@ model User {
   certFile      String @db.Text()
   userName      String
   organization  String
+  accountList         Account[]
 }
 
-model Token {
-  token_name    String @unique @id
-  access_token  String @db.Text()
-  scope         String
-  token_type    String
-  expires_in    Int
+model Account {
+  id                  Int    @id @default(autoincrement())
+  connectedId         String
+  accountName         String
+  accountNumber       String
+  accountDisplay      String
+  accountBalance      Int
+  accountCreatedAt    String
+  accountRefreshedAt  String
+  user                User @relation(fields: [connectedId], references: [connectedId])
+  tradeList           Trade[]
+}
+
+model Trade {
+  id                  Int    @id @default(autoincrement())
+  tradedAt            DateTime
+  amount              Int
+  category            String
+  paymentMethod       String
+  correspondent       String @db.Text()
+  afterBalance        Int
+  accountId           Int
+  account             Account  @relation(fields: [accountId], references: [id])
 }
