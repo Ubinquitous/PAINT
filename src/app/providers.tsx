@@ -1,8 +1,9 @@
 "use client";
 
-import { PropsWithChildren, useState } from "react";
-import { Provider as JotaiProvider } from "jotai";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Provider as JotaiProvider } from "jotai";
+import { PropsWithChildren, useState } from "react";
+import Modal from "~/components/common/Modal";
 
 const Providers = ({ children }: PropsWithChildren) => {
   const [queryClient] = useState(
@@ -19,7 +20,10 @@ const Providers = ({ children }: PropsWithChildren) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <JotaiProvider>{children}</JotaiProvider>
+      <JotaiProvider>
+        <Modal />
+        {children}
+      </JotaiProvider>
     </QueryClientProvider>
   );
 };
