@@ -29,11 +29,12 @@ model Account {
   id                  Int    @id @default(autoincrement())
   connectedId         String
   accountName         String
-  accountNumber       String
+  accountNumber       String @unique
   accountDisplay      String
   accountBalance      Int
   accountCreatedAt    String
   accountRefreshedAt  String
+  organization        String
   user                User @relation(fields: [connectedId], references: [connectedId])
   tradeList           Trade[]
 }
