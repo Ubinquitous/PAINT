@@ -5,15 +5,14 @@ import { useAtom } from "jotai";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createElement, useState } from "react";
-import { BounceLoader } from "react-spinners";
 import { Column } from "~/components/Flex";
 import Button from "~/components/atoms/Button";
 import Input from "~/components/atoms/Input";
+import Loader from "~/components/atoms/Loader";
 import { CoinEmoji } from "~/components/images";
 import { signupContext } from "~/context";
 import { useCertPasswordMatchMutation } from "~/services/cert/mutation";
 import { certQuery } from "~/services/cert/query";
-import { theme } from "~/styles";
 import StepContainer from "../StepContainer";
 import * as L from "./style";
 
@@ -48,7 +47,7 @@ const SignupStep3 = () => {
     if (!isSuccess)
       return (
         <L.ImageContainer>
-          <BounceLoader color={theme.primary} size={30} />
+          <Loader />
         </L.ImageContainer>
       );
     if (!data.data)
