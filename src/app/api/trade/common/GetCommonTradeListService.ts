@@ -10,7 +10,7 @@ class GetCommonTradeListService {
 
     const { id: accountId } =
       (await prismaClient.account.findFirst({
-        where: { accountNumber },
+        where: { accountNumber, connectedId },
       })) || {};
 
     const data = await prismaClient.trade.findMany({
