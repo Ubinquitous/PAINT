@@ -60,6 +60,7 @@ class AccountRegisterService {
         const { id: accountId } = await prismaClient.account.create({
           data: {
             connectedId,
+            organization,
             accountName: deposit.resAccountName,
             accountNumber: deposit.resAccount,
             accountDisplay: deposit.resAccountDisplay,

@@ -1,7 +1,6 @@
-import { NextRequest } from "next/server";
 import GetAccountListService from "./GetAccountListService";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const getAccountListService = new GetAccountListService();
-  return getAccountListService.execute(req);
+  return getAccountListService.execute();
 }
