@@ -2,10 +2,10 @@
 
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 import Loader from "~/components/atoms/Loader";
 import Footer from "~/components/common/Footer";
 import { Logo } from "~/components/icons";
-import { useModal } from "~/hooks/useModal";
 import { useUser } from "~/hooks/useUser";
 import { accountQuery } from "~/services/account/query";
 import { withComma } from "~/utils";
@@ -17,7 +17,7 @@ import * as L from "./style";
 
 const Page = () => {
   const month = dayjs().month() + 1;
-  const { openModal } = useModal();
+  const router = useRouter();
   const { user } = useUser();
   const { data: spendList, isSuccess: spendListSuccess } = useQuery(
     accountQuery.getSpendOfMonth(month)
@@ -26,8 +26,8 @@ const Page = () => {
     accountQuery.getAccountList()
   );
 
-  const handleOpenTradeModal = () => {
-    openModal({ component: <h1>asdklsandlasdlknaskdl</h1> });
+  const handleOpenTradeModal = (accountNumber: string) => {
+    router.push(`/trade/${accountNumber}`);
   };
 
   return (
@@ -57,7 +57,7 @@ const Page = () => {
           <L.BankList>
             {accountList.data.map((account: GetAccountListDto) => (
               <BankItem
-                onClick={handleOpenTradeModal}
+                onClick={() => handleOpenTradeModal(account.accountNumber)}
                 key={account.id}
                 organization={account.organization}
                 accountName={account.accountName}

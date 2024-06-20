@@ -4,9 +4,11 @@ import { flex, font, theme } from "~/styles";
 
 export const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  height: fit-content;
   background-color: ${theme.primary};
   gap: 16px;
+  overflow-y: scroll;
+  padding-bottom: 14%;
   ${flex.COLUMN_FLEX};
 `;
 
@@ -35,7 +37,6 @@ export const SubTitle = styled.p`
 export const Body = styled.main`
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
   background-color: ${theme.white};
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
