@@ -13,7 +13,7 @@ const Modal = () => {
   if (visible)
     return (
       <>
-        <ModalWrap>{component}</ModalWrap>
+        {component}
         <Background onClick={closeModal} />
       </>
     );
@@ -27,14 +27,6 @@ const Background = styled.section`
   left: 0;
   background-color: ${theme.white};
   opacity: 0.8;
-`;
-
-const ModalWrap = styled.main`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
 `;
 
 export default Modal;
