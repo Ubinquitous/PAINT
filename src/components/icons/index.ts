@@ -6,4 +6,5 @@ export { default as HomeIcon } from "./HomeIcon";
 export { default as InvestIcon } from "./InvestIcon";
 export { default as Logo } from "./Logo";
 export { default as PensionIcon } from "./PensionIcon";
+export { default as RefreshIcon } from "./RefreshIcon";
 export { default as SpendIcon } from "./SpendIcon";
