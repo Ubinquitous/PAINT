@@ -1,4 +1,5 @@
 import { styled } from "@linaria/react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { flex, font, theme } from "~/styles";
 import {
@@ -11,7 +12,7 @@ import {
 
 const navigateList = [
   { icon: HomeIcon, name: "홈", router: "/home" },
-  { icon: SpendIcon, name: "관리", router: "/analysis" },
+  { icon: SpendIcon, name: "관리", router: "/manage" },
   { icon: InvestIcon, name: "주식", router: "/invest" },
   { icon: BookIcon, name: "뉴스", router: "/news" },
   { icon: PensionIcon, name: "연금", router: "/pension" },
@@ -26,7 +27,7 @@ const Footer = () => {
         const isCurrent = currentPath === navigate.router;
         const NavigationIcon = navigate.icon;
         return (
-          <Navigate key={navigate.name}>
+          <Navigate href={navigate.router} key={navigate.name}>
             <NavigationIcon fill={isCurrent ? theme.primary : theme.grey} />
             <NavigateText isCurrent={isCurrent}>{navigate.name}</NavigateText>
           </Navigate>
@@ -46,7 +47,7 @@ const Container = styled.ul`
   ${flex.BETWEEN};
 `;
 
-const Navigate = styled.li`
+const Navigate = styled(Link)`
   width: 30px;
   height: 54px;
   gap: 8px;
