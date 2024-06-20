@@ -44,7 +44,7 @@ class GetSpendAtMonthService {
       sumIncomeByCorrespondent
     )
       .sort((a, b) => (b[1] as any) - (a[1] as any))
-      .slice(0, 5)
+      .slice(0, 3)
       .map((s) => ({ name: s[0], amount: s[1] }));
 
     const sumExpenditureByCorrespondent = expenditureTradeList.reduce(
@@ -60,7 +60,7 @@ class GetSpendAtMonthService {
       sumExpenditureByCorrespondent
     )
       .sort((a, b) => (b[1] as any) - (a[1] as any))
-      .slice(0, 5)
+      .slice(0, 3)
       .map((s) => ({ name: s[0], amount: s[1] }));
 
     /** top of payment method */
@@ -77,7 +77,7 @@ class GetSpendAtMonthService {
       sumIncomeByPaymentMethod
     )
       .sort((a, b) => (b[1] as any) - (a[1] as any))
-      .slice(0, 5)
+      .slice(0, 3)
       .map((s) => ({ name: s[0], amount: s[1] }));
 
     const sumExpenditureByPaymentMethod = expenditureTradeList.reduce(
@@ -94,20 +94,20 @@ class GetSpendAtMonthService {
       sumExpenditureByPaymentMethod
     )
       .sort((a, b) => (b[1] as any) - (a[1] as any))
-      .slice(0, 5)
+      .slice(0, 3)
       .map((s) => ({ name: s[0], amount: s[1] }));
 
     /** top of list */
     const topOfIncomeList = incomeTradeList
       .sort((a, b) => a.amount - b.amount)
       .reverse()
-      .slice(0, 5);
+      .slice(0, 3);
 
     const topOfExpenditureList = expenditureTradeList
       .filter((a) => Number(`${a.category}${a.amount}`) < 0)
       .sort((a, b) => a.amount - b.amount)
       .reverse()
-      .slice(0, 5);
+      .slice(0, 3);
 
     const tradeAmountList = tradeList.map((s) =>
       Number(`${s.category}${s.amount}`)
