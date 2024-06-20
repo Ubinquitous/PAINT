@@ -14,3 +14,11 @@ export const getTradeList = async (accountNumber: string) => {
   const { data } = await paint.get(`/trade/${accountNumber}`, authorization());
   return data;
 };
+
+export const requestTradeRefresh = async (accountNumber: string) => {
+  const { data } = await paint.post(
+    `/refresh/${accountNumber}`,
+    authorization()
+  );
+  return data;
+};
