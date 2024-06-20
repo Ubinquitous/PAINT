@@ -2,10 +2,11 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
-import { Column } from "~/components/Flex";
+import { Column, Row } from "~/components/Flex";
 import Loader from "~/components/atoms/Loader";
-import { ArrowIcon } from "~/components/icons";
+import { ArrowIcon, RefreshIcon } from "~/components/icons";
 import { bankColor, bankRecord } from "~/data";
+import { useTradeRefreshMutation } from "~/services/account/mutation";
 import { accountQuery } from "~/services/account/query";
 import { theme } from "~/styles";
 import { withComma } from "~/utils";
@@ -17,12 +18,18 @@ const Trade = () => {
   const { data, isSuccess } = useQuery(
     accountQuery.getTradeList(accountNumber)
   );
+  const { mutate } = useTradeRefreshMutation();
   if (!isSuccess) return <Loader />;
 
   const { accountName } = data.account;
 
   const slicedAcName =
     accountName.length > 10 ? `${accountName.slice(0, 10)}...` : accountName;
+
+  const handleTradeRefreshClick = () => {
+    mutate(accountNumber);
+  };
+
   return (
     <L.Container color={bankColor[data.account.organization]}>
       <L.BankImage
@@ -43,7 +50,10 @@ const Trade = () => {
         </Column>
         <L.AccountInfoBox>
           <L.AccountNumberText>계좌 잔액</L.AccountNumberText>
-          <L.Title>{withComma(data.account.accountBalance)}원</L.Title>
+          <Row alignItems="center" gap="8px">
+            <L.Title>{withComma(data.account.accountBalance)}원</L.Title>
+            <RefreshIcon onClick={handleTradeRefreshClick} fill={theme.white} />
+          </Row>
         </L.AccountInfoBox>
       </L.Header>
       <L.Body>
