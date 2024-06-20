@@ -14,10 +14,14 @@ const tag = {
     background: "#FFF7CC",
     text: "#EDD816",
   },
+  괜찮아요: {
+    background: "#CCE3FF",
+    text: "#0043C7",
+  },
 };
 
 interface TagProps {
-  type: "현명해요" | "갑작스러워요" | "위험해요";
+  type: string;
 }
 
 const Tag = ({ type }: TagProps) => {
