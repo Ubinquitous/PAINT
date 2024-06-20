@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import { NextRequest, NextResponse } from "next/server";
 import { codefAuthorization } from "~/lib/codefAuthorization";
 import { decodeToJson } from "~/lib/decodeToJson";
+import { ConnectedCommonVerifyRequestDto } from "~/lib/dto/ConnectedCommonVerifyRequestDto";
 import { ConnectedVerifyRequestDto } from "~/lib/dto/ConnectedVerifyRequestDto";
 import { getAuthorizationToken } from "~/lib/getAuthorizationToken";
 import { jwtUtils } from "~/lib/jwtUtils";
@@ -33,6 +34,33 @@ class AccountTradeRefreshService {
       where: { accountNumber },
     })) || { id: -1 };
 
+    const accountResult = await this.getAccountList({
+      connectedId,
+      organization,
+    });
+    const { data: account } = decodeToJson(accountResult);
+    if (account.resDepositTrust) {
+      for (const deposit of account.resDepositTrust) {
+        await prismaClient.account.upsert({
+          where: { accountNumber },
+          create: {
+            connectedId,
+            organization,
+            accountName: deposit.resAccountName,
+            accountNumber: deposit.resAccount,
+            accountDisplay: deposit.resAccountDisplay,
+            accountBalance: Number(deposit.resAccountBalance),
+            accountCreatedAt: deposit.resAccountStartDate,
+            accountRefreshedAt: deposit.resLastTranDate,
+          },
+          update: {
+            accountBalance: Number(deposit.resAccountBalance),
+            accountRefreshedAt: deposit.resLastTranDate,
+          },
+        });
+      }
+    }
+
     if (Array.isArray(tradeList.resTrHistoryList)) {
       await prismaClient.trade.deleteMany({ where: {} });
       for (const trade of tradeList.resTrHistoryList) {
@@ -57,7 +85,7 @@ class AccountTradeRefreshService {
       }
     }
 
-    return NextResponse.json({ status: 200 });
+    return NextResponse.json({ status: 200, accountNumber });
   }
 
   private async getCommonTradeList(request: ConnectedVerifyRequestDto) {
@@ -67,6 +95,14 @@ class AccountTradeRefreshService {
         orderBy: "0",
         inquiryType: "1",
       },
+      ...(await codefAuthorization()),
+    });
+    return data;
+  }
+
+  private async getAccountList(request: ConnectedCommonVerifyRequestDto) {
+    const { data } = await codef.get("/v1/kr/bank/p/account/account-list", {
+      data: request,
       ...(await codefAuthorization()),
     });
     return data;
