@@ -1,5 +1,10 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getAccountList, getSpendOfMonth, getTradeList } from "./api";
+import {
+  getAccountList,
+  getAverageScore,
+  getSpendOfMonth,
+  getTradeList,
+} from "./api";
 
 export const accountQuery = {
   getAccountList: () =>
@@ -16,5 +21,10 @@ export const accountQuery = {
     queryOptions({
       queryKey: ["query.trade.list", accountNumber],
       queryFn: () => getTradeList(accountNumber),
+    }),
+  getAverageScore: () =>
+    queryOptions({
+      queryKey: ["query.average.score"],
+      queryFn: getAverageScore,
     }),
 };

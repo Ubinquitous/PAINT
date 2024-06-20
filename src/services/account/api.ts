@@ -15,6 +15,11 @@ export const getTradeList = async (accountNumber: string) => {
   return data;
 };
 
+export const getAverageScore = async () => {
+  const { data } = await paint.get("/analysis", authorization());
+  return data;
+};
+
 export const requestTradeRefresh = async (accountNumber: string) => {
   const { data } = await paint.post(
     `/refresh/${accountNumber}`,
