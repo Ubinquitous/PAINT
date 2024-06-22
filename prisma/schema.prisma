@@ -22,7 +22,9 @@ model User {
   certFile      String @db.Text()
   userName      String
   organization  String
-  accountList         Account[]
+  spendingTargetAmount  String
+  tagInfo       String
+  accountList   Account[]
 }
 
 model Account {
