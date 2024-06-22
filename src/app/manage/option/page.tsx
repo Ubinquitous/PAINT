@@ -51,6 +51,7 @@ const Option = () => {
 
   useEffect(() => {
     if (isSuccess) setOption(data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   const handleSaveClick = () => {
