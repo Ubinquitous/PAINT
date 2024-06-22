@@ -1,5 +1,5 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { requestTradeRefresh } from "./api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { requestTargetSave, requestTradeRefresh } from "./api";
 
 export const useTradeRefreshMutation = () => {
   const queryClient = useQueryClient();
@@ -10,6 +10,17 @@ export const useTradeRefreshMutation = () => {
       queryClient.invalidateQueries({
         queryKey: ["query.trade.list", accountNumber],
       });
+    },
+  });
+};
+
+export const useTargetSaveMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: requestTargetSave,
+    onSuccess: () => {
+      window.location.reload();
+      queryClient.invalidateQueries({ queryKey: ["query.spend.target"] });
     },
   });
 };

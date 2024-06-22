@@ -20,10 +20,20 @@ export const getAverageScore = async () => {
   return data;
 };
 
+export const getSpendTarget = async () => {
+  const { data } = await paint.get("/spend/target", authorization());
+  return data;
+};
+
 export const requestTradeRefresh = async (accountNumber: string) => {
   const { data } = await paint.post(
     `/refresh/${accountNumber}`,
     authorization()
   );
+  return data;
+};
+
+export const requestTargetSave = async (body: any) => {
+  const { data } = await paint.post(`/spend/target`, body, authorization());
   return data;
 };

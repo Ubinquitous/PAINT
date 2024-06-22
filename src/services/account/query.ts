@@ -3,6 +3,7 @@ import {
   getAccountList,
   getAverageScore,
   getSpendOfMonth,
+  getSpendTarget,
   getTradeList,
 } from "./api";
 
@@ -26,5 +27,10 @@ export const accountQuery = {
     queryOptions({
       queryKey: ["query.average.score"],
       queryFn: getAverageScore,
+    }),
+  getSpendTarget: () =>
+    queryOptions({
+      queryKey: ["query.spend.target"],
+      queryFn: getSpendTarget,
     }),
 };
