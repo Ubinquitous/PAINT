@@ -27,8 +27,24 @@ class GetCommonTradeListService {
       },
     });
 
-    const tradeList = await prismaClient.trade.findMany({
+    const { tagInfo } =
+      (await prismaClient.user.findUnique({
+        where: { connectedId },
+      })) || {};
+    const tag = JSON.parse(tagInfo || "{}");
+    console.log(tag);
+    const tradeListOne = await prismaClient.trade.findMany({
       where: { accountId },
+    });
+
+    const tradeList = tradeListOne.map((trade) => {
+      if (trade.category === "-") {
+        if (trade.amount < tag["1"]) return { ...trade, tag: "현명해요" };
+        else if (trade.amount < tag["2"]) return { ...trade, tag: "괜찮아요" };
+        else if (trade.amount < tag["3"]) return { ...trade, tag: "위험해요" };
+        else return { ...trade, tag: "갑작스러워요" };
+      }
+      return trade;
     });
 
     return NextResponse.json({ status: 200, account, tradeList });
