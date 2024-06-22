@@ -1,4 +1,3 @@
-import console from "console";
 import dayjs from "dayjs";
 import { NextRequest, NextResponse } from "next/server";
 import { codefAuthorization } from "~/lib/codefAuthorization";
@@ -28,7 +27,7 @@ class AccountRegisterService {
       userName,
       organization: organizationList,
     } = request;
-    console.log(result);
+
     const { data } = decodeToJson(result);
     const { connectedId } = data;
     const organization = JSON.parse(organizationList)[0];
@@ -41,6 +40,8 @@ class AccountRegisterService {
         certFile,
         userName,
         organization,
+        spendingTargetAmount: "0",
+        tagInfo: `{ "1": 5000, "2": 10000, "3": 15000 }`,
       },
     });
 
