@@ -65,6 +65,7 @@ const Trade = () => {
               <TradeItem
                 key={trade.id}
                 amount={amount}
+                tag={trade.tag}
                 correspondent={trade.correspondent}
                 timestamp={trade.tradedAt}
               />

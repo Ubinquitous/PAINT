@@ -10,9 +10,17 @@ interface TradeItemProps {
   amount: number;
   correspondent: string;
   timestamp: string;
+  invisible?: boolean;
+  tag?: string;
 }
 
-const TradeItem = ({ amount, correspondent, timestamp }: TradeItemProps) => {
+const TradeItem = ({
+  amount,
+  correspondent,
+  timestamp,
+  invisible,
+  tag,
+}: TradeItemProps) => {
   return (
     <Container>
       <Row gap="16px">
@@ -24,7 +32,7 @@ const TradeItem = ({ amount, correspondent, timestamp }: TradeItemProps) => {
         />
         <AmountBox>
           <Amount>
-            {withComma(amount)}원 <Tag type="현명해요" />
+            {withComma(amount)}원 {!invisible && tag && <Tag type={tag} />}
           </Amount>
           <Correspondent>{correspondent.replaceAll("%2B", " ")}</Correspondent>
         </AmountBox>
