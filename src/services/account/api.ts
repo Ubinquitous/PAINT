@@ -25,6 +25,11 @@ export const getSpendTarget = async () => {
   return data;
 };
 
+export const getNews = async () => {
+  const { data } = await paint.get("/news", authorization());
+  return data;
+};
+
 export const requestTradeRefresh = async (accountNumber: string) => {
   const { data } = await paint.post(
     `/refresh/${accountNumber}`,

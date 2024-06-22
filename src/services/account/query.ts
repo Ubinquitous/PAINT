@@ -2,6 +2,7 @@ import { queryOptions } from "@tanstack/react-query";
 import {
   getAccountList,
   getAverageScore,
+  getNews,
   getSpendOfMonth,
   getSpendTarget,
   getTradeList,
@@ -32,5 +33,10 @@ export const accountQuery = {
     queryOptions({
       queryKey: ["query.spend.target"],
       queryFn: getSpendTarget,
+    }),
+  getNews: () =>
+    queryOptions({
+      queryKey: ["query.news"],
+      queryFn: getNews,
     }),
 };
