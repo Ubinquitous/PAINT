@@ -25,6 +25,34 @@ class GetSpendAtMonthService {
       },
     });
 
+    const { tagInfo } =
+      (await prismaClient.user.findUnique({
+        where: { connectedId },
+      })) || {};
+
+    const tag = JSON.parse(tagInfo || "{}");
+
+    const tagList = tradeList
+      .map((trade) => {
+        if (trade.category === "-") {
+          if (trade.amount < tag["1"]) return "현명해요";
+          else if (trade.amount < tag["2"]) return "괜찮아요";
+          else if (trade.amount < tag["3"]) return "위험해요";
+          else return "갑작스러워요";
+        }
+        return null;
+      })
+      .filter((s) => !!s);
+
+    const countOccurrences = (arr: any) => {
+      return arr.reduce((acc: any, curr: any) => {
+        acc[curr] = (acc[curr] || 0) + 1;
+        return acc;
+      }, {});
+    };
+
+    const tagCount = countOccurrences(tagList);
+
     const incomeTradeList = tradeList.filter((trade) => trade.category === "+");
     const expenditureTradeList = tradeList.filter(
       (trade) => trade.category === "-"
@@ -115,11 +143,16 @@ class GetSpendAtMonthService {
     const amountInList = tradeAmountList.filter((amount) => amount > 0);
     const amountOutList = tradeAmountList.filter((amount) => amount < 0);
 
+    const { spendingTargetAmount } =
+      (await prismaClient.user.findUnique({ where: { connectedId } })) || {};
+
     return NextResponse.json({
       expenditure: Math.abs(sum(amountOutList)),
       income: sum(amountInList),
       total: sum(tradeAmountList),
+      spendingTargetAmount,
       topOfIncomeList,
+      tagCount,
       topOfExpenditureList,
       topOfSumIncomeByPaymentMethod,
       topOfSumExpenditureByPaymentMethod,
