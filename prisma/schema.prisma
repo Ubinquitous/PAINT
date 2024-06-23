@@ -19,11 +19,13 @@ model User {
   connectedId   String @id
   password      String @db.Text()
   birthDate     String
+  identity      String
   certFile      String @db.Text()
   userName      String
   organization  String
   spendingTargetAmount  String
   tagInfo       String
+  pension       Pension?
   accountList   Account[]
 }
 
@@ -51,4 +53,10 @@ model Trade {
   afterBalance        Int
   accountId           Int
   account             Account  @relation(fields: [accountId], references: [id])
+}
+
+model Pension {
+  connectedId         String @id
+  pension             String @db.Text()
+  user   User   @relation(fields: [connectedId], references: [connectedId])
 }
