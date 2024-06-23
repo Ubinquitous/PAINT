@@ -9,22 +9,17 @@ import { prismaClient } from "~/lib/prismaClient";
 import { publicEncRSA } from "~/lib/publicEncRSA";
 import { codef } from "../..";
 import { AccountRegisterRequestDto } from "./AccountRegisterRequestDto";
-import { AccountRegisterVerification } from "./AccountRegisterVerification";
 
 class AccountRegisterService {
   public async execute(req: NextRequest) {
     const request = (await req.json()) as AccountRegisterRequestDto;
-    const validation = AccountRegisterVerification.safeParse(request);
-
-    if (!validation.success)
-      return NextResponse.json(validation.error.issues, { status: 400 });
-
     const result = await this.registerAccount(request);
     const {
       password,
       birthDate,
       certFile,
       userName,
+      identity,
       organization: organizationList,
     } = request;
 
@@ -42,6 +37,7 @@ class AccountRegisterService {
         organization,
         spendingTargetAmount: "0",
         tagInfo: `{ "1": 5000, "2": 10000, "3": 15000 }`,
+        identity,
       },
     });
 
