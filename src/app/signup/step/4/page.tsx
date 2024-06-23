@@ -39,12 +39,13 @@ const SignupStep4 = () => {
   };
 
   const handleConnectBankClick = async () => {
-    const { userName, password, birthDate, bankCodeList, certFile } = signup;
+    const { userName, password, birthDate, bankCodeList, certFile, identity } =
+      signup;
     const request: AccountRegisterRequestDto = {
       userName,
       password,
       birthDate,
-      identity: "",
+      identity,
       countryCode: "KR",
       organization: JSON.stringify(bankCodeList),
       certFile,
