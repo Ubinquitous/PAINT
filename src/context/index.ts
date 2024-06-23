@@ -6,6 +6,7 @@ export const signupContext = atom({
   birthDate: "",
   certFile: "",
   password: "",
+  identity: "",
   bankCodeList: [] as Array<string>,
 });
 
