@@ -25,6 +25,7 @@ const SignupStep4 = () => {
 
   const handleSelectBankList = (code: string) => {
     // delete (double tap)
+    console.log(signup);
     if (isSelectedBankCode(code))
       return setSignup((prev) => ({
         ...prev,
