@@ -116,7 +116,7 @@ const Manage = () => {
                 {["현명해요", "괜찮아요"].map((tag) => (
                   <L.TagItem key={tag}>
                     <Tag type={tag} />
-                    <L.TagText>{spend.tagCount[tag]}개</L.TagText>
+                    <L.TagText>{spend.tagCount[tag] || 0}개</L.TagText>
                   </L.TagItem>
                 ))}
               </Row>
@@ -124,7 +124,7 @@ const Manage = () => {
                 {["갑작스러워요", "위험해요"].map((tag) => (
                   <L.TagItem key={tag}>
                     <Tag type={tag} />
-                    <L.TagText>{spend.tagCount[tag]}개</L.TagText>
+                    <L.TagText>{spend.tagCount[tag] || 0}개</L.TagText>
                   </L.TagItem>
                 ))}
               </Row>
