@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import StepContainer from "../StepContainer";
 import Input from "~/components/atoms/Input";
 import Button from "~/components/atoms/Button";
@@ -35,8 +35,8 @@ const SignupStep2 = () => {
 
   return (
     <StepContainer
-      title={`${signup.userName}님의\n주민등록번호 앞자리를 알려주세요.`}
-      description="나이를 기준으로 지출을 분석해드릴게요"
+      title={`${signup.userName}님의\n주민등록번호를 알려주세요.`}
+      description="서비스를 위해 필요해요, 안전하게 보관해드릴게요"
     >
       <L.Container>
         <Column gap="12px">
@@ -49,7 +49,17 @@ const SignupStep2 = () => {
               placeholder="000000"
             />
             <L.Separator />
-            <L.RegisterLastText />
+            <Input
+              name="identity"
+              type="password"
+              textAlign="center"
+              value={signup.identity}
+              onChange={({ target: { value } }) =>
+                setSignup((prev) => ({ ...prev, identity: value }))
+              }
+              placeholder="0000000"
+            />
+            {/* <L.RegisterLastText /> */}
           </Row>
           {isDateFormatError && (
             <L.WarningText>올바른 날짜를 입력해주세요.</L.WarningText>
