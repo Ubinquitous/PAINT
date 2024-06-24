@@ -30,6 +30,11 @@ export const getNews = async () => {
   return data;
 };
 
+export const getPension = async () => {
+  const { data } = await paint.get("/pension", authorization());
+  return data;
+};
+
 export const requestTradeRefresh = async (accountNumber: string) => {
   const { data } = await paint.post(
     `/refresh/${accountNumber}`,

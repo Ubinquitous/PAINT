@@ -8,3 +8,4 @@ export { default as Logo } from "./Logo";
 export { default as PensionIcon } from "./PensionIcon";
 export { default as RefreshIcon } from "./RefreshIcon";
 export { default as SpendIcon } from "./SpendIcon";
+export { default as MyPageIcon } from "./MyPageIcon";

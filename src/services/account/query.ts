@@ -3,6 +3,7 @@ import {
   getAccountList,
   getAverageScore,
   getNews,
+  getPension,
   getSpendOfMonth,
   getSpendTarget,
   getTradeList,
@@ -38,5 +39,10 @@ export const accountQuery = {
     queryOptions({
       queryKey: ["query.news"],
       queryFn: getNews,
+    }),
+  getPension: () =>
+    queryOptions({
+      queryKey: ["query.pension"],
+      queryFn: getPension,
     }),
 };

@@ -18,7 +18,23 @@ const tag = {
     background: "#CCE3FF",
     text: "#0043C7",
   },
-};
+  국민연금: {
+    background: "#FFF8D4",
+    text: "#FEDC28",
+  },
+  퇴직연금: {
+    background: "#D4E0FF",
+    text: "#2897FE",
+  },
+  주택연금: {
+    background: "#D4FFD6",
+    text: "#28FE64",
+  },
+  개인연금: {
+    background: "#FF9F9F",
+    text: "#CF3737",
+  },
+} as any;
 
 interface TagProps {
   type: string;

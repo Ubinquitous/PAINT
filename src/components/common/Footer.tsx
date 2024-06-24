@@ -6,6 +6,7 @@ import {
   BookIcon,
   HomeIcon,
   InvestIcon,
+  MyPageIcon,
   PensionIcon,
   SpendIcon,
 } from "../icons";
@@ -13,9 +14,9 @@ import {
 const navigateList = [
   { icon: HomeIcon, name: "홈", router: "/home" },
   { icon: SpendIcon, name: "관리", router: "/manage" },
-  { icon: InvestIcon, name: "주식", router: "/invest" },
-  { icon: BookIcon, name: "뉴스", router: "/news" },
   { icon: PensionIcon, name: "연금", router: "/pension" },
+  { icon: BookIcon, name: "뉴스", router: "/news" },
+  { icon: MyPageIcon, name: "마이", router: "/mypage" },
 ];
 
 const Footer = () => {
