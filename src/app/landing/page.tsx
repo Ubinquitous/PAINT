@@ -12,11 +12,12 @@ const Main = () => {
 
   return (
     <L.Container>
-      <L.TutorialSliderContainer>
-        <L.TutorialSliderLegend>
-          <Image src={PartyEmoji} alt="emoji" width={50} height={50} />
-        </L.TutorialSliderLegend>
-      </L.TutorialSliderContainer>
+      <L.StyledImage
+        src="/assets/common/tutorial.png"
+        width={999}
+        height={999}
+        alt="tutorial"
+      />
       <L.ServiceSloganText>
         과소비로 텅 비어버린 지갑,
         <div>

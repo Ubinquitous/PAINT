@@ -1,4 +1,5 @@
 import { styled } from "@linaria/react";
+import Image from "next/image";
 import { flex, font, theme } from "~/styles";
 
 export const Container = styled.main`
@@ -42,4 +43,9 @@ export const ServiceSloganText = styled.h1`
       color: ${theme.primary};
     }
   }
+`;
+
+export const StyledImage = styled(Image)`
+  width: 100%;
+  height: auto;
 `;
