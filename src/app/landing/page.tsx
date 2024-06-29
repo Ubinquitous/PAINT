@@ -1,14 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as L from "./style";
 import { PartyEmoji } from "~/components/images";
 import Image from "next/image";
 import Button from "~/components/atoms/Button";
 import TermsAgreeModal from "./TermsAgreeModal";
+import { useUser } from "~/hooks/useUser";
+import { useRouter } from "next/navigation";
 
 const Main = () => {
   const [isStart, setIsStart] = useState(false);
+  const { isLoggedIn } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isLoggedIn) return router.push("/home");
+  });
 
   return (
     <L.Container>

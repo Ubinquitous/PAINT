@@ -4,9 +4,9 @@ import { flex, font, theme } from "~/styles";
 
 export const Container = styled.main`
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   padding: 70px 60px;
-  gap: 10vh;
+  gap: 10dvh;
   ${flex.COLUMN_END};
 `;
 
