@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import * as L from "./style";
 import { Logo } from "~/components/icons";
 import { useRouter } from "next/navigation";
+import { useUser } from "~/hooks/useUser";
 
 const Splash = () => {
   const router = useRouter();
