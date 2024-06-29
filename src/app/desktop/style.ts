@@ -3,7 +3,7 @@ import { flex } from "~/styles";
 
 export const Container = styled.main`
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   gap: 10vw;
   ${flex.CENTER};
 `;
