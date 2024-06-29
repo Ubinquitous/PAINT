@@ -24,7 +24,7 @@ const Background = styled.section`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
 `;
 
 const Container = styled.section`
@@ -32,7 +32,7 @@ const Container = styled.section`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 86vh;
+  height: 86dvh;
   z-index: 3;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;

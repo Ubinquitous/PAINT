@@ -51,7 +51,7 @@ const StepContainer = ({
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   padding: 40px;
   gap: 28px;
   ${flex.COLUMN_FLEX};

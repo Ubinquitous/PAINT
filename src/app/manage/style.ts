@@ -15,7 +15,7 @@ export const Container = styled.div`
 export const Header = styled.header`
   color: ${theme.white};
   ${flex.COLUMN_FLEX};
-  gap: 6vh;
+  gap: 6dvh;
   padding: 50px 40px 10px 40px;
 `;
 

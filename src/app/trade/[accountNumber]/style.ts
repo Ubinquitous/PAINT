@@ -89,7 +89,7 @@ export const TradeList = styled.ul`
   width: 100%;
   height: fit-content;
   overflow-y: scroll;
-  min-height: 60vh;
+  min-height: 60dvh;
   gap: 24px;
   ${flex.COLUMN_FLEX};
 `;

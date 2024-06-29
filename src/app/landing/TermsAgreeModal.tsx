@@ -123,7 +123,7 @@ const Background = styled.section`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   background-color: ${theme.gray};
   opacity: 0.5;
 `;
@@ -133,7 +133,7 @@ const Container = styled.section`
   bottom: -1100px;
   left: 0;
   width: 100%;
-  height: 66vh;
+  height: 66dvh;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   padding: 40px 30px;

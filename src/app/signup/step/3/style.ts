@@ -20,7 +20,7 @@ export const CertTitle = styled.h1`
 
 export const CertificateList = styled.ul`
   width: 100%;
-  height: 22vh;
+  height: 22dvh;
   overflow-y: scroll;
   ${flex.COLUMN_FLEX};
 `;

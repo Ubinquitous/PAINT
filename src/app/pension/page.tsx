@@ -57,23 +57,23 @@ const Pension = () => {
                 </L.TagItem>
                 <L.TagItem>
                   <Tag type="퇴직연금" />
-                  <L.TagText>{data.pension.resProductNumber2}개</L.TagText>
+                  <L.TagText>{data.pension.resProductNumber2 || 0}개</L.TagText>
                 </L.TagItem>
               </Row>
               <Row width="100%" gap="14px">
                 <L.TagItem>
                   <Tag type="주택연금" />
-                  <L.TagText>{data.pension.resProductNumber3}개</L.TagText>
+                  <L.TagText>{data.pension.resProductNumber3 || 0}개</L.TagText>
                 </L.TagItem>
                 <L.TagItem>
                   <Tag type="개인연금" />
-                  <L.TagText>{data.pension.resProductNumber1}개</L.TagText>
+                  <L.TagText>{data.pension.resProductNumber1 || 0}개</L.TagText>
                 </L.TagItem>
               </Row>
             </Column>
             <L.SquareBox>
               <L.PensionName>국민연금</L.PensionName>
-              {data.pension.resNationalPensionList.map(
+              {data?.pension?.resNationalPensionList?.map(
                 (pension: any, i: number) => (
                   <NationPensionItem key={i} {...pension} />
                 )
@@ -81,7 +81,7 @@ const Pension = () => {
             </L.SquareBox>
             <L.SquareBox>
               <L.PensionName>퇴직연금</L.PensionName>
-              {data.pension.resRetirementPensionList.map(
+              {data?.pension?.resRetirementPensionList?.map(
                 (pension: any, i: number) => (
                   <NationPensionItem key={i} {...pension} />
                 )
@@ -89,7 +89,7 @@ const Pension = () => {
             </L.SquareBox>
             <L.SquareBox>
               <L.PensionName>주택연금</L.PensionName>
-              {data.pension.resReverseMortgageList.map(
+              {data?.pension?.resReverseMortgageList?.map(
                 (pension: any, i: number) => (
                   <NationPensionItem key={i} {...pension} />
                 )
@@ -97,7 +97,7 @@ const Pension = () => {
             </L.SquareBox>
             <L.SquareBox>
               <L.PensionName>개인연금</L.PensionName>
-              {data.pension.resPrivatePensionList.map(
+              {data?.pension?.resPrivatePensionList?.map(
                 (pension: any, i: number) => (
                   <NationPensionItem key={i} {...pension} />
                 )
